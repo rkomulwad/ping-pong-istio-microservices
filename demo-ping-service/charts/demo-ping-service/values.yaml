@@ -1,0 +1,51 @@
+# Default values for demo-ping-service.
+# This is a YAML-formatted file.
+
+# Docker settings
+image:
+  # The name of your docker container
+  repository: demo-ping-service
+  # Your docker container's tag
+  tag: v1
+  imagePullPolicy: IfNotPresent
+
+# The number of pod replicas to run for your service
+replicaCount: 1
+
+# Change ports as per the application
+# default servicePort,containerPort for springboot is 8080
+# default containerPort for NGinx apps is 80
+service:
+  type: ClusterIP
+  servicePort: 8080
+  containerPort: 8080
+
+# sample namespace mvp-apps, web-ui-apps
+namespace: ping
+
+# Health Probe settings (use Kubernetes syntax)
+# https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+probes:
+  livenessProbe:
+    initialDelaySeconds: 60
+    periodSeconds: 3
+    httpGet:
+      path: /actuator/health
+      port: 8080
+  readinessProbe:
+    initialDelaySeconds: 60
+    timeoutSeconds: 60
+    periodSeconds: 10
+    httpGet:
+      path: /actuator/health
+      port: 8080
+
+# We usually recommend not to specify default resources and to leave this as a conscious choice for the user.
+resourceLimits:
+  resources:
+    limits:
+      cpu: "512m"
+      memory: "1024Mi"
+    requests:
+      cpu: "512m"
+      memory: "1024Mi"
