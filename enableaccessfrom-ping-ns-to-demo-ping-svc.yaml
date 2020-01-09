@@ -1,0 +1,16 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "enableaccessfrom-ping-ns-to-demo-ping-svc"
+  namespace: pong
+spec:
+  selector:
+    matchLabels:
+      app: demo-pong-service
+  rules:
+  - from:
+    - source:
+        namespaces: ["ping"]  
+    to:
+    - operation:
+        methods: ["GET"]

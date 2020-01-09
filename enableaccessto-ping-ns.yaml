@@ -1,0 +1,13 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "AuthorizationPolicy"
+metadata:
+  name: "enableaccessto-ping-ns"
+  namespace: ping
+spec:
+  selector:
+    matchLabels:
+      app: demo-ping-service
+  rules:
+  - to:
+    - operation:
+        methods: ["GET"]
