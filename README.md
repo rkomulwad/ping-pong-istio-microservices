@@ -72,17 +72,20 @@ Enables inbound access to the ping service
 kubectl apply -f c:\istio\enableaccessto-ping-ns.yaml
 ```
 
-If running docker for desktop enable port forwarding 
-```
-kubectl -n istio-system port-forward istio-ingressgateway-podname 8080:80
-```
-
-http://localhost:8080/ping
-
 Enables access to pong services from the ping namespace
 ```
 kubectl apply -f c:\istio\enableaccessfrom-ping-ns-to-demo-ping-svc.yaml
 ```
+
+If running local enable port forwarding 
+```
+kubectl -n istio-system port-forward istio-ingressgateway-podname 8080:80
+```
+
+If setup properly the app should be accessible at
+http://localhost:8080/ping
+
+Any policy mismatch results in 'RBAC Access Denied'
 
 ### Undeploy
 ```
